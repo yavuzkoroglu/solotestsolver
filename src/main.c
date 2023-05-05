@@ -44,6 +44,7 @@ int main(void) {
     /* Print the solution! */
     print_layout(layout[1]);
     for (size_t i = 0; i < sz; i++) {
+        printf("STEP %zu: ", i+1);
         print_decision(decisionStack[i][trace[i]]);
         applyDecision_layout(layout[1], decisionStack[i][trace[i]]);
         print_layout(layout[1]);
@@ -51,8 +52,6 @@ int main(void) {
     }
     free(decisionStack);
     free(trace);
-
-    printf("Solved the SoloTest in %zu steps!\n", sz);
 
     return 0;
 }
