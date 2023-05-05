@@ -4,13 +4,13 @@
 #include "solotest/layout.h"
 #include "util/unless.h"
 
-void print_layout(const Layout layout) {
+void print_layout(Layout const layout) {
     for (unsigned char row = 0; row < LAYOUT_NROWS; row++) {
         printf("%s\n", layout[row]);
     }
 }
 
-unsigned int score_layout(const Layout layout) {
+unsigned int score_layout(Layout const layout) {
     unsigned int score = 0;
 
     for (unsigned char row = 0; row < LAYOUT_NROWS; row++) {
@@ -22,9 +22,9 @@ unsigned int score_layout(const Layout layout) {
     return score;
 }
 
-Decision* decisions_layout(const Layout layout) {
-    size_t cap = BUFSIZ;
+Decision* decisions_layout(Layout const layout) {
     size_t sz = 0;
+    size_t cap = BUFSIZ;
     Decision* decisions = malloc(cap * sizeof(Decision));
 
     for (unsigned char row = 0; row < LAYOUT_NROWS; row++) {
@@ -49,7 +49,7 @@ Decision* decisions_layout(const Layout layout) {
     return decisions;
 }
 
-void applyDecision_layout(Layout layout, const Decision decision) {
+void applyDecision_layout(Layout layout, Decision const decision) {
     layout[decision.row][decision.col] = '.';
     switch (decision.dir) {
         case DIR_EAST:
@@ -70,7 +70,7 @@ void applyDecision_layout(Layout layout, const Decision decision) {
     }
 }
 
-void undoDecision_layout(Layout layout, const Decision decision) {
+void undoDecision_layout(Layout layout, Decision const decision) {
     layout[decision.row][decision.col] = 'o';
     switch (decision.dir) {
         case DIR_EAST:
