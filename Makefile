@@ -12,4 +12,4 @@ bin: ; @\
     mkdir bin
 
 compile: ; @\
-    cc ${CONSTFLAGS} ${INCLUDE} ${SRC} -o ${EXECUTABLE}
+    cc ${CONSTFLAGS} -O2 ${INCLUDE} ${SRC} -o ${EXECUTABLE}

@@ -1,2 +1,2 @@
 # solotestsolver
-Solves a SoloTest and prints the solution on terminal
+Solves a Standard (English) Peg Solitaire and prints the solution on terminal
