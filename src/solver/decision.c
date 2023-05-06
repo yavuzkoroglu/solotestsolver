@@ -12,8 +12,8 @@ void print_decision(Decision const decision) {
     }
 }
 
-size_t count_decisions(Decision const* const decisions) {
-    size_t count = 0;
+unsigned char count_decisions(Decision const* const restrict decisions) {
+    unsigned char count = 0;
     while (IS_VALID_DECISION(decisions[count])) count++;
     return count;
 }

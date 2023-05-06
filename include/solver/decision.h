@@ -1,6 +1,5 @@
 #ifndef DECISION_H
     #define DECISION_H
-    #include <stddef.h>
 
     #define IS_VALID_DECISION(decision) (decision.row || decision.col || decision.dir)
 
@@ -11,5 +10,5 @@
     } Decision;
 
     void print_decision(Decision const);
-    size_t count_decisions(Decision const* const);
+    unsigned char count_decisions(Decision const* const restrict);
 #endif

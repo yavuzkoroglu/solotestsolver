@@ -2,56 +2,40 @@
 #include <stdlib.h>
 #include "solver/decision.h"
 #include "solotest/layout.h"
+#include "util/unless.h"
 #include "util/until.h"
+
+#define CAP 32
 
 int main(void);
 
 int main(void) {
-    size_t count = 0;
-    size_t sz = 0;
-    size_t cap = BUFSIZ;
+    unsigned char sz = 0;
     Layout layout[2] = { INITIAL_LAYOUT, INITIAL_LAYOUT };
-    Decision** decisionStack = NULL;
-    size_t* trace = NULL;
-
-    decisionStack = malloc(cap * sizeof(Decision*));
-    trace = malloc(cap * sizeof(size_t));
+    Decision decisionStack[CAP][CAP];
+    unsigned char trace[CAP];
 
     /* Stack-based Solver */
-    decisionStack[sz] = decisions_layout(layout[0]);
+    decisions_layout(decisionStack[sz], layout[0]);
     until (score_layout(layout[0]) == 1) {
-        count = count_decisions(decisionStack[sz]);
-        if (count) {
-            trace[sz] = count - 1;
-            applyDecision_layout(layout[0], decisionStack[sz][trace[sz]]);
-        } else {
-            free(decisionStack[sz--]);
-            undoDecision_layout(layout[0], decisionStack[sz][trace[sz]]);
+        unless ((trace[sz] = count_decisions(decisionStack[sz]))) {
             until (trace[sz]) {
-                free(decisionStack[sz--]);
+                sz--;
                 undoDecision_layout(layout[0], decisionStack[sz][trace[sz]]);
             }
-            trace[sz]--;
-            applyDecision_layout(layout[0], decisionStack[sz][trace[sz]]);
         }
-        decisionStack[++sz] = decisions_layout(layout[0]);
-        if (sz >= cap) {
-            decisionStack = realloc(decisionStack, (cap <<= 1) * sizeof(Decision*));
-            trace = realloc(trace, (cap <<= 1) * sizeof(size_t));
-        }
+        applyDecision_layout(layout[0], decisionStack[sz][--trace[sz]]);
+        decisions_layout(decisionStack[++sz], layout[0]);
     }
 
     /* Print the solution! */
     print_layout(layout[1]);
-    for (size_t i = 0; i < sz; i++) {
-        printf("STEP %zu: ", i+1);
+    for (unsigned char i = 0; i < sz; i++) {
+        printf("STEP %u: ", i+1);
         print_decision(decisionStack[i][trace[i]]);
         applyDecision_layout(layout[1], decisionStack[i][trace[i]]);
         print_layout(layout[1]);
-        free(decisionStack[i]);
     }
-    free(decisionStack);
-    free(trace);
 
     return 0;
 }

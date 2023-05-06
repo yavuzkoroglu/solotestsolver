@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include "solotest/direction.h"
 #include "solotest/layout.h"
 #include "util/unless.h"
@@ -10,8 +9,8 @@ void print_layout(Layout const layout) {
     }
 }
 
-unsigned int score_layout(Layout const layout) {
-    unsigned int score = 0;
+unsigned char score_layout(Layout const layout) {
+    unsigned char score = 0;
 
     for (unsigned char row = 0; row < LAYOUT_NROWS; row++) {
         for (unsigned char col = 0; col < LAYOUT_NCOLS; col++) {
@@ -22,10 +21,8 @@ unsigned int score_layout(Layout const layout) {
     return score;
 }
 
-Decision* decisions_layout(Layout const layout) {
-    size_t sz = 0;
-    size_t cap = BUFSIZ;
-    Decision* decisions = malloc(cap * sizeof(Decision));
+void decisions_layout(Decision* const restrict decisions, Layout const layout) {
+    unsigned char sz = 0;
 
     for (unsigned char row = 0; row < LAYOUT_NROWS; row++) {
         for (unsigned char col = 0; col < LAYOUT_NCOLS; col++) {
@@ -38,15 +35,11 @@ Decision* decisions_layout(Layout const layout) {
                 decisions[sz++] = (Decision){ row, col, DIR_WEST };
             if (row > 1 && layout[row - 1][col] == 'o' && layout[row - 2][col] == '.')
                 decisions[sz++] = (Decision){ row, col, DIR_NORTH };
-            if (sz >= cap)
-                decisions = realloc(decisions, (cap <<= 1) * sizeof(Decision));
         }
     }
 
     /* Special value denoting list end */
     decisions[sz] = (Decision){0,0,0};
-
-    return decisions;
 }
 
 void applyDecision_layout(Layout layout, Decision const decision) {
