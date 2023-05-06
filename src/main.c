@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include "solver/decision.h"
 #include "solotest/layout.h"
 #include "util/unless.h"
