@@ -2,6 +2,9 @@
     #define LAYOUT_H
     #include "solver/decision.h"
 
+    /* There are 32 pegs in the initial layout. */
+    #define NPEGS 32
+
     #define LAYOUT_NROWS 7
     #define LAYOUT_NCOLS 7
 

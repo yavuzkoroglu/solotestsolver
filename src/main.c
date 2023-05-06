@@ -3,12 +3,9 @@
 #include "solotest/layout.h"
 #include "util/until.h"
 
-/* There are 32 pegs in the initial layout. */
-#define NPEGS 32
-
 /* Every turn, one peg is removed.
  * When only one peg is remaining, the puzzle is solved.
- * Since we have 32 pegs initially,
+ * Since we have NPEGS == 32 pegs initially,
  * We say (turn_id == NPEGS - 1) <-> THE_PUZZLE_IS_SOLVED.
  */
 #define THE_PUZZLE_IS_SOLVED (turn_id == NPEGS - 1)
@@ -16,9 +13,9 @@
 int main(void);
 
 int main(void) {
-    /* We keep two copies of the initial layout.
-     * layout[0] is for solving the puzzle.
-     * layout[1] is for printing the solution from the beginning.
+    /* We keep two copies of the initial layout
+     * layout[0] is for solving the puzzle
+     * layout[1] is for printing the solution from the beginning
      */
     Layout layout[2] = { INITIAL_LAYOUT, INITIAL_LAYOUT };
 
