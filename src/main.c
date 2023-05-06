@@ -8,13 +8,13 @@
 int main(void);
 
 int main(void) {
+    unsigned char sz = 0;
     Layout layout[2] = { INITIAL_LAYOUT, INITIAL_LAYOUT };
-    unsigned char sz;
     Decision decisionStack[CAP][CAP];
     unsigned char trace[CAP];
 
     /* Stack-based Solver */
-    for (sz = 0; score_layout(layout[0]) != 1; sz++) {
+    until (score_layout(layout[0]) == 1) {
         decisions_layout(decisionStack[sz], layout[0]);
         trace[sz] = count_decisions(decisionStack[sz]);
         until (trace[sz]) {
@@ -22,6 +22,7 @@ int main(void) {
             undoDecision_layout(layout[0], decisionStack[sz][trace[sz]]);
         }
         applyDecision_layout(layout[0], decisionStack[sz][--trace[sz]]);
+        sz++;
     }
 
     /* Print the solution! */
