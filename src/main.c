@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include "solver/decision.h"
 #include "solotest/layout.h"
-#include "util/unless.h"
 #include "util/until.h"
 
 #define CAP 32
@@ -17,11 +16,10 @@ int main(void) {
     /* Stack-based Solver */
     for (sz = 0; score_layout(layout[0]) != 1; sz++) {
         decisions_layout(decisionStack[sz], layout[0]);
-        unless ((trace[sz] = count_decisions(decisionStack[sz]))) {
-            until (trace[sz]) {
-                sz--;
-                undoDecision_layout(layout[0], decisionStack[sz][trace[sz]]);
-            }
+        trace[sz] = count_decisions(decisionStack[sz]);
+        until (trace[sz]) {
+            sz--;
+            undoDecision_layout(layout[0], decisionStack[sz][trace[sz]]);
         }
         applyDecision_layout(layout[0], decisionStack[sz][--trace[sz]]);
     }
