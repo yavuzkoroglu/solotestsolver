@@ -3,33 +3,78 @@
 #include "solotest/layout.h"
 #include "util/until.h"
 
-#define CAP 32
+/* There are 32 pegs in the initial layout. */
+#define NPEGS 32
+
+/* Every turn, one peg is removed.
+ * When only one peg is remaining, the puzzle is solved.
+ * Since we have 32 pegs initially,
+ * We say (turn_id == NPEGS - 1) <-> THE_PUZZLE_IS_SOLVED.
+ */
+#define THE_PUZZLE_IS_SOLVED (turn_id == NPEGS - 1)
 
 int main(void);
 
 int main(void) {
-    unsigned char sz = 0;
+    /* We keep two copies of the initial layout.
+     * layout[0] is for solving the puzzle.
+     * layout[1] is for printing the solution from the beginning.
+     */
     Layout layout[2] = { INITIAL_LAYOUT, INITIAL_LAYOUT };
-    Decision decisionStack[CAP][CAP];
-    unsigned char trace[CAP];
 
-    /* Stack-based Solver */
-    until (sz == CAP - 1) {
-        trace[sz] = decisions_layout(decisionStack[sz], layout[0]);
-        until (trace[sz]) {
-            sz--;
-            undoDecision_layout(layout[0], decisionStack[sz][trace[sz]]);
+    /* This value is always (NPEGS-1) or smaller, see PUZZLE_IS_SOLVED */
+    unsigned char turn_id = 0;
+
+    /* We keep a list of decisions for every turn
+     * decisions[m][n] denotes the nth decision of the mth turn
+     */
+    Decision decisions[NPEGS][NPEGS];
+
+    /* decision_ids[m] denotes the current decision_id of the mth turn
+     */
+    unsigned char decision_ids[NPEGS];
+
+    /******************************
+     * PHASE 1: Solve the puzzle! *
+     ******************************/
+
+    /* This is a depth-first solver */
+    until (THE_PUZZLE_IS_SOLVED) {
+        /* Populate the list of decisions at turn == turn_id and select the last decision */
+        decision_ids[turn_id] = populateDecisions_layout(decisions[turn_id], layout[0]);
+
+        /* BACKTRACK (when there are no unexplored decisions) */
+        until (decision_ids[turn_id]) {
+            /* Take back one turn */
+            turn_id--;
+            undoDecision_layout(layout[0], decisions[turn_id][decision_ids[turn_id]]);
         }
-        applyDecision_layout(layout[0], decisionStack[sz][--trace[sz]]);
-        sz++;
+
+        /* Apply the selected decision */
+        applyDecision_layout(layout[0], decisions[turn_id][--decision_ids[turn_id]]);
+
+        /* Next turn */
+        turn_id++;
     }
 
-    /* Print the solution! */
+    /*******************************
+     * PHASE 2: Print the solution *
+     *******************************/
+
+    /* Print the initial layout */
     print_layout(layout[1]);
-    for (unsigned char i = 0; i < sz; i++) {
+
+    for (unsigned char i = 0; i < turn_id; i++) {
+        /* Print the turn number */
         printf("STEP %u: ", i+1);
-        print_decision(decisionStack[i][trace[i]]);
-        applyDecision_layout(layout[1], decisionStack[i][trace[i]]);
+
+        /* Print the decision */
+        print_decision(decisions[i][decision_ids[i]]);
+
+        /* Apply the decision on the puzzle layout */
+        applyDecision_layout(layout[1], decisions[i][decision_ids[i]]);
+
+        /* Print the updated layout */
         print_layout(layout[1]);
     }
 
