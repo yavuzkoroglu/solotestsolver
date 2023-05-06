@@ -14,9 +14,8 @@ int main(void) {
     unsigned char trace[CAP];
 
     /* Stack-based Solver */
-    until (score_layout(layout[0]) == 1) {
-        decisions_layout(decisionStack[sz], layout[0]);
-        trace[sz] = count_decisions(decisionStack[sz]);
+    until (sz == CAP - 1) {
+        trace[sz] = decisions_layout(decisionStack[sz], layout[0]);
         until (trace[sz]) {
             sz--;
             undoDecision_layout(layout[0], decisionStack[sz][trace[sz]]);

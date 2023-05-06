@@ -18,8 +18,7 @@
     typedef char Layout[LAYOUT_NROWS][LAYOUT_NCOLS+1];
 
     void print_layout(Layout const);
-    unsigned char score_layout(Layout const);
-    void decisions_layout(Decision* const restrict, Layout const);
+    unsigned char decisions_layout(Decision* const restrict, Layout const);
     void applyDecision_layout(Layout, Decision const);
     void undoDecision_layout(Layout, Decision const);
 #endif

@@ -4,24 +4,11 @@
 #include "util/unless.h"
 
 void print_layout(Layout const layout) {
-    for (unsigned char row = 0; row < LAYOUT_NROWS; row++) {
+    for (unsigned char row = 0; row < LAYOUT_NROWS; row++)
         printf("%s\n", layout[row]);
-    }
 }
 
-unsigned char score_layout(Layout const layout) {
-    unsigned char score = 0;
-
-    for (unsigned char row = 0; row < LAYOUT_NROWS; row++) {
-        for (unsigned char col = 0; col < LAYOUT_NCOLS; col++) {
-            score += (layout[row][col] == 'o');
-        }
-    }
-
-    return score;
-}
-
-void decisions_layout(Decision* const restrict decisions, Layout const layout) {
+unsigned char decisions_layout(Decision* const restrict decisions, Layout const layout) {
     unsigned char sz = 0;
 
     for (unsigned char row = 0; row < LAYOUT_NROWS; row++) {
@@ -40,6 +27,9 @@ void decisions_layout(Decision* const restrict decisions, Layout const layout) {
 
     /* Special value denoting list end */
     decisions[sz] = (Decision){0,0,0};
+
+    /* Return size */
+    return sz;
 }
 
 void applyDecision_layout(Layout layout, Decision const decision) {

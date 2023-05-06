@@ -11,9 +11,3 @@ void print_decision(Decision const decision) {
         case DIR_NORTH: puts("north");
     }
 }
-
-unsigned char count_decisions(Decision const* const restrict decisions) {
-    unsigned char count = 0;
-    while (IS_VALID_DECISION(decisions[count])) count++;
-    return count;
-}
