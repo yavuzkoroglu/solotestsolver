@@ -1,6 +1,6 @@
 #ifndef LAYOUT_H
     #define LAYOUT_H
-    #include "solver/decision.h"
+    #include "decision.h"
 
     /* There are 32 pegs in the initial layout. */
     #define NPEGS 32

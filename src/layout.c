@@ -1,6 +1,6 @@
 #include <stdio.h>
-#include "solotest/direction.h"
-#include "solotest/layout.h"
+#include "direction.h"
+#include "layout.h"
 #include "util/unless.h"
 
 void print_layout(Layout const layout) {

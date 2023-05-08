@@ -1,6 +1,6 @@
 #include <stdio.h>
-#include "solver/decision.h"
-#include "solotest/layout.h"
+#include "decision.h"
+#include "layout.h"
 #include "util/until.h"
 
 /* Every turn, one peg is removed.
@@ -27,8 +27,7 @@ int main(void) {
      */
     Decision decisions[NPEGS][NPEGS];
 
-    /* decision_ids[m] denotes the current decision_id of the mth turn
-     */
+    /* decision_ids[m] denotes the current decision_id of the mth turn */
     unsigned char decision_ids[NPEGS];
 
     /******************************
@@ -47,10 +46,8 @@ int main(void) {
             undoDecision_layout(layout[0], decisions[turn_id][decision_ids[turn_id]]);
         }
 
-        /* Apply the selected decision */
-        applyDecision_layout(layout[0], decisions[turn_id][--decision_ids[turn_id]]);
-
         /* Next turn */
+        applyDecision_layout(layout[0], decisions[turn_id][--decision_ids[turn_id]]);
         turn_id++;
     }
 
@@ -62,16 +59,9 @@ int main(void) {
     print_layout(layout[1]);
 
     for (unsigned char i = 0; i < turn_id; i++) {
-        /* Print the turn number */
         printf("STEP %u: ", i+1);
-
-        /* Print the decision */
         print_decision(decisions[i][decision_ids[i]]);
-
-        /* Apply the decision on the puzzle layout */
         applyDecision_layout(layout[1], decisions[i][decision_ids[i]]);
-
-        /* Print the updated layout */
         print_layout(layout[1]);
     }
 

@@ -1,6 +1,6 @@
 CC=cc
 INCLUDE=-Iinclude
-SRC=src/*.c src/*/*.c
+SRC=src/*.c
 EXECUTABLE=bin/solotestsolver.out
 CONSTFLAGS=-std=c99 -Weverything -Wno-poison-system-directories
 release: bin compile
