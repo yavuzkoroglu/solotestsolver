@@ -3,11 +3,6 @@
 #include "direction.h"
 
 void print_decision(Decision const decision) {
-    printf("FROM (%u,%u) JUMP ", decision.row, decision.col);
-    switch (decision.dir) {
-        case DIR_EAST:  puts("east");   break;
-        case DIR_SOUTH: puts("south");  break;
-        case DIR_WEST:  puts("west");   break;
-        case DIR_NORTH: puts("north");
-    }
+    static char const directions[4][6] = { "east", "south", "west", "north" };
+    printf("FROM (%u,%u) JUMP %s\n", decision.row, decision.col, directions[decision.dir]);
 }
