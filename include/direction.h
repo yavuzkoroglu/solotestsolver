@@ -5,4 +5,6 @@
     #define DIR_SOUTH   1
     #define DIR_WEST    2
     #define DIR_NORTH   3
+
+    #define DIR_KEYWORDS { "east", "south", "west", "north" }
 #endif
