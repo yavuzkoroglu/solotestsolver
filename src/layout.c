@@ -21,6 +21,7 @@ void print_layout(Layout const layout) {
 #define MOV_I       { 0, 0 }
 */
 unsigned char populateDecisions_layout(Decision* const restrict decisions, Layout const layout) {
+    unsigned char sz = 0;
     /*
     static unsigned char const coordinates[9][9][2] = {
         { { 3, 0 }, { 3, 1 }, MOV_I, MOV_I, MOV_I, MOV_I, MOV_I, MOV_I, MOV_I },
@@ -111,8 +112,6 @@ unsigned char populateDecisions_layout(Decision* const restrict decisions, Layou
             decisions[sz++] = (Decision){ row, col, DIR_NORTH };
     }
     */
-
-    unsigned char sz = 0;
 
     for (unsigned char row = 0; row < LAYOUT_NROWS; row++) {
         for (unsigned char col = 0; col < LAYOUT_NCOLS; col++) {
