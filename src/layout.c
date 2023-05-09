@@ -11,36 +11,6 @@ void print_layout(Layout const layout) {
 unsigned char populateDecisions_layout(Decision* const restrict decisions, Layout const layout) {
     unsigned char sz = 0;
 
-    /*
-    if (layout[0][2] == 'o') {
-        if (layout[0][3] == 'o' && layout[0][4] == '.')
-            decisions[sz++] = (Decision){ 0, 2, DIR_EAST };
-        if (layout[1][2] == 'o' && layout[2][2] == '.')
-            decisions[sz++] = (Decision){ 0, 2, DIR_SOUTH };
-    }
-    if (layout[0][3] == 'o' && layout[1][3] == 'o' && layout[2][3] == '.')
-        decisions[sz++] = (Decision){ 0, 3, DIR_SOUTH };
-    if (layout[0][4] == 'o') {
-        if (layout[0][3] == 'o' && layout[0][2] == '.')
-            decisions[sz++] = (Decision){ 0, 4, DIR_WEST };
-        if (layout[1][4] == 'o' && layout[2][4] == '.')
-            decisions[sz++] = (Decision){ 0, 2, DIR_SOUTH };
-    }
-    if (layout[1][2] == 'o') {
-        if (layout[1][3] == 'o' && layout[1][4] == '.')
-            decisions[sz++] = (Decision){ 0, 2, DIR_EAST };
-        if (layout[2][2] == 'o' && layout[3][2] == '.')
-            decisions[sz++] = (Decision){ 0, 2, DIR_SOUTH };
-    }
-    if (layout[0][3] == 'o' && layout[1][3] == 'o' && layout[2][3] == '.')
-        decisions[sz++] = (Decision){ 0, 3, DIR_SOUTH };
-    if (layout[0][4] == 'o') {
-        if (layout[0][3] == 'o' && layout[0][2] == '.')
-            decisions[sz++] = (Decision){ 0, 4, DIR_WEST };
-        if (layout[1][4] == 'o' && layout[2][4] == '.')
-            decisions[sz++] = (Decision){ 0, 2, DIR_SOUTH };
-    }*/
-
     for (unsigned char row = 0; row < LAYOUT_NROWS; row++) {
         for (unsigned char col = 0; col < LAYOUT_NCOLS; col++) {
             /* If no peg, no moves! */
@@ -68,8 +38,8 @@ unsigned char populateDecisions_layout(Decision* const restrict decisions, Layou
     return sz;
 }
 
-static const char rowOffsets[4][2] = { { 0, 0 }, { 1, 2 }, { 0, 0 }, { -1, -2 } };
-static const char colOffsets[4][2] = { { 1, 2 }, { 0, 0 }, { -1, -2 }, { 0, 0 } };
+static char const rowOffsets[4][2] = { { 0, 0 }, { 1, 2 }, { 0, 0 }, { -1, -2 } };
+static char const colOffsets[4][2] = { { 1, 2 }, { 0, 0 }, { -1, -2 }, { 0, 0 } };
 void applyDecision_layout(Layout layout, Decision const decision) {
     layout[decision.row][decision.col] = '.';
     layout[decision.row + rowOffsets[decision.dir][0]][decision.col + colOffsets[decision.dir][0]] = '.';
