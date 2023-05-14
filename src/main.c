@@ -37,7 +37,7 @@ int main(void) {
     /* This is a depth-first solver */
     until (THE_PUZZLE_IS_SOLVED) {
         /* Populate the list of decisions at turn == turn_id and select the last decision */
-        decision_ids[turn_id] = populateDecisions_layout(decisions[turn_id], layout[0]);
+        decision_ids[turn_id] = populateDecisions_layout(decisions[turn_id], layout[0], turn_id);
 
         /* BACKTRACK (when there are no unexplored decisions) */
         until (decision_ids[turn_id]) {

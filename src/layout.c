@@ -8,10 +8,10 @@ void print_layout(Layout const layout) {
         printf("%s\n", layout[row]);
 }
 
-unsigned char populateDecisions_layout(Decision* const restrict decisions, Layout const layout) {
+unsigned char populateDecisions_layout(Decision* const restrict decisions, Layout const layout, unsigned char const turn_id) {
     unsigned char sz = 0;
-    for (unsigned char row = 0; row < LAYOUT_NROWS; row++) {
-        for (unsigned char col = 0; col < LAYOUT_NCOLS; col++) {
+    for (unsigned char row = 0; row < LAYOUT_NROWS && sz < NPEGS - turn_id - 1; row++) {
+        for (unsigned char col = 0; col < LAYOUT_NCOLS && sz < NPEGS - turn_id - 1; col++) {
             unless (layout[row][col] == 'o') continue;
 
             if (col < LAYOUT_NCOLS - 2 && layout[row][col + 1] == 'o' && layout[row][col + 2] == '.')
